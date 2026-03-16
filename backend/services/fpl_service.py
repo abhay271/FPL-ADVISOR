@@ -46,13 +46,13 @@ class FPLService:
         return httpx.AsyncClient(timeout=30.0, headers=HEADERS)
 
     # ── bootstrap ─────────────────────────────────────────────────────────────
-    async def _fetch_bootstrap(self) -> dict:
+    async def _fetch_bootstrap(self) -> dict[str, object]:
         async with self._client() as c:
             r = await c.get(BOOTSTRAP_URL)
             r.raise_for_status()
             return r.json()
 
-    async def get_bootstrap_status(self) -> dict:
+    async def get_bootstrap_status(self) -> dict[str, object]:
         data = await self._fetch_bootstrap()
         gw   = _current_gw(data["events"])
         evt  = next((e for e in data["events"] if e["id"] == gw), {})
@@ -68,7 +68,7 @@ class FPLService:
         }
 
     # ── players ───────────────────────────────────────────────────────────────
-    async def get_players(self) -> list[dict]:
+    async def get_players(self) -> list[dict[str, object]]:
         data     = await self._fetch_bootstrap()
         team_map = {t["id"]: t["name"] for t in data["teams"]}
         pos_map  = {et["id"]: et["singular_name_short"] for et in data["element_types"]}
@@ -97,7 +97,7 @@ class FPLService:
         ]
 
     # ── teams ─────────────────────────────────────────────────────────────────
-    async def get_teams(self) -> list[dict]:
+    async def get_teams(self) -> list[dict[str, object]]:
         data = await self._fetch_bootstrap()
         return [
             {
@@ -114,7 +114,7 @@ class FPLService:
         ]
 
     # ── fixtures ──────────────────────────────────────────────────────────────
-    async def get_fixtures(self) -> list[dict]:
+    async def get_fixtures(self) -> list[dict[str, object]]:
         async with self._client() as c:
             r = await c.get(FIXTURES_URL)
             r.raise_for_status()
@@ -132,7 +132,7 @@ class FPLService:
         ]
 
     # ── my team ───────────────────────────────────────────────────────────────
-    async def get_my_team(self, team_id: int) -> dict:
+    async def get_my_team(self, team_id: int) -> dict[str, object]:
         async with self._client() as c:
             entry_r, boot_r = await asyncio.gather(
                 c.get(f"https://fantasy.premierleague.com/api/entry/{team_id}/"),
@@ -202,7 +202,7 @@ class FPLService:
         }
 
     # ── player detail ─────────────────────────────────────────────────────────
-    async def get_player_detail(self, player_id: int) -> dict:
+    async def get_player_detail(self, player_id: int) -> dict[str, object]:
         async with self._client() as c:
             boot_r, summ_r = await asyncio.gather(
                 c.get(BOOTSTRAP_URL),
@@ -249,7 +249,7 @@ class FPLService:
         }
 
     # ── player analysis (structured + positional avgs) ────────────────────────
-    async def get_player_analysis(self, player_id: int) -> dict:
+    async def get_player_analysis(self, player_id: int) -> dict[str, object]:
         async with self._client() as c:
             boot_r, summ_r = await asyncio.gather(
                 c.get(BOOTSTRAP_URL),
@@ -327,7 +327,7 @@ class FPLService:
         }
 
     # ── gameweek summary ──────────────────────────────────────────────────────
-    async def get_gameweek_summary(self) -> dict:
+    async def get_gameweek_summary(self) -> dict[str, object]:
         data = await self._fetch_bootstrap()
         gw   = _current_gw(data["events"])
 
@@ -366,7 +366,7 @@ class FPLService:
         }
 
     # ── recommendations ───────────────────────────────────────────────────────
-    async def get_recommendations(self, team_id: int) -> dict:
+    async def get_recommendations(self, team_id: int) -> dict[str, object]:
         async with self._client() as c:
             entry_r, boot_r, fix_r = await asyncio.gather(
                 c.get(f"https://fantasy.premierleague.com/api/entry/{team_id}/"),
@@ -512,7 +512,7 @@ class FPLService:
         }
 
     # ── AI chat ───────────────────────────────────────────────────────────────
-    async def ai_chat(self, message: str, team_id: str | None = None) -> str:
+    async def ai_chat(self, message: str, team_id: str | None = None) -> str:  # noqa: D401
         api_key = os.getenv("ANTHROPIC_API_KEY", "").strip()
         if not api_key:
             return (
