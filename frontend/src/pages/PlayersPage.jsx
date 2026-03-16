@@ -4,6 +4,7 @@ import remarkGfm from "remark-gfm";
 import { Tooltip } from "../components/Tooltip.jsx";
 import { useTeamId } from "../hooks/useTeamId.js";
 
+// TODO(v2): allow users to save/reorder column visibility preferences to localStorage
 // ─── Column definitions ────────────────────────────────────────────────────────
 const COLUMNS = [
   { key: "web_name",            label: "Player",  tooltip: null,                                              align: "left"   },
@@ -24,6 +25,7 @@ const COLUMNS = [
 const POSITIONS = ["GKP", "DEF", "MID", "FWD"];
 const PRICE_MIN = 3.5;
 const PRICE_MAX = 16.0;
+// TODO(v2): add a price range slider component instead of static min/max constants
 
 // ─── Helpers ───────────────────────────────────────────────────────────────────
 function formColor(form) {

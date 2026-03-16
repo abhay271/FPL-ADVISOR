@@ -6,6 +6,7 @@ import { useTeamId } from "../hooks/useTeamId.js";
 import { TeamIdGate } from "../components/TeamIdGate.jsx";
 
 const POS_ORDER = ["GKP", "DEF", "MID", "FWD"];
+// TODO(v2): support multiple gameweeks — let the user browse their team history GW by GW
 
 // ─── Football pitch CSS ────────────────────────────────────────────────────────
 function Pitch({ children }) {

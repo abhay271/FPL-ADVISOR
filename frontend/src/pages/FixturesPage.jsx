@@ -1,3 +1,4 @@
+// TODO(v2): add a gameweek range selector so managers can scout fixtures beyond the next 6 GWs
 import { useState, useEffect, useMemo } from "react";
 import { FDR, getCurrentGW, buildTeamSchedule } from "../utils/fixtures.js";
 

@@ -6,6 +6,7 @@ import { TeamIdGate } from "../components/TeamIdGate.jsx";
 import { FDR } from "../utils/fixtures.js";
 
 const POSITIONS   = ["ALL", "GKP", "DEF", "MID", "FWD"];
+// TODO(v2): add a budget filter so users can hide transfers they can't afford
 const SCORE_DIMS  = [
   { key: "form",    label: "Form",     color: "#00ff87" },
   { key: "fixture", label: "Fixtures", color: "#01d167" },
